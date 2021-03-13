@@ -24,11 +24,9 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 	public GUI_TextFieldButton GetCurrentSelectedButton()
 	{
 		return _currentSelectedButton;
+    }
 
-	}
-
-
-	protected override void OnAwake()
+    protected override void OnAwake()
 	{
 		base.OnAwake();
 		

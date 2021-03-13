@@ -13,6 +13,7 @@ namespace Assets.Scripts.GUI.World
         private RectTransform _root = default;
 
         private List<TabButton> _tabButtons = new List<TabButton>();
+        private TabButton _activeButton = null;
 
         public void AddTabButton(TabButton tabButton)
         {
@@ -20,6 +21,7 @@ namespace Assets.Scripts.GUI.World
             tabButton.AddOnButtonSelectEventListener(OnButtonSelectEventListener);
 
             tabButton.SetRoot(_root);
+            _activeButton = tabButton;
 
             foreach (var button in _tabButtons)
             {
@@ -39,12 +41,26 @@ namespace Assets.Scripts.GUI.World
                     button.Unselect();
                 }
             }
+
+            _activeButton = arg0.Button;
         }
 
         public void RemoveTabButton(TabButton tabButton)
         {
             _tabButtons.Remove(tabButton);
             tabButton.Destroy();
+
+            _activeButton = _tabButtons.LastOrDefault();
+
+            if (_activeButton != null)
+            {
+                _activeButton.Select();
+            }
+        }
+
+        public TabButton GetActiveButton()
+        {
+            return _activeButton;
         }
 
         public override TabsButtonPanel Create()

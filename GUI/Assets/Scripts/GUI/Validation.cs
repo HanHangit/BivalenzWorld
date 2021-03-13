@@ -53,29 +53,32 @@ public class Validation
     {
         var board = GameManager.Instance.GetCurrentBoard();
 
-        List<Field> obj = board.GetFieldElements();
         List<WorldObject> worldObjs = new List<WorldObject>();
-        foreach (Field item in obj)
+        if (board != null)
         {
-            if (item.HasPredicateInstance())
+            List<Field> obj = board.GetFieldElements();
+            foreach (Field item in obj)
             {
-                List<Predicate> predicates = item.GetPredicatesList();
-                var constant = item.GetConstantsList();
-                List<string> worldPredicates = new List<string>();
-                foreach (var pred in predicates)
+                if (item.HasPredicateInstance())
                 {
-                    worldPredicates.Add(pred.PredicateIdentifier);
+                    List<Predicate> predicates = item.GetPredicatesList();
+                    var constant = item.GetConstantsList();
+                    List<string> worldPredicates = new List<string>();
+                    foreach (var pred in predicates)
+                    {
+                        worldPredicates.Add(pred.PredicateIdentifier);
+                    }
+
+                    //foreach (var co in constant)
+                    //{
+                    //	DebugConsole(co);
+                    //}
+
+                    List<object> coord = new List<object>();
+                    coord.Add(item.GetX());
+                    coord.Add(item.GetZ());
+                    worldObjs.Add(new WorldObject(constant, worldPredicates, coord));
                 }
-
-                //foreach (var co in constant)
-                //{
-                //	DebugConsole(co);
-                //}
-
-                List<object> coord = new List<object>();
-                coord.Add(item.GetX());
-                coord.Add(item.GetZ());
-                worldObjs.Add(new WorldObject(constant, worldPredicates, coord));
             }
         }
 

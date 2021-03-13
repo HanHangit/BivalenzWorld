@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net.Configuration;
+using Assets.Scripts.GUI.World;
 using SFB;
 using TMPro;
 using Validator;
@@ -17,50 +19,67 @@ public class GUI_SaveCurrentGame : GUI_Button
 
     private string _lastChoosenDirectory = "";
 
-
     [SerializeField]
-    private TMP_InputField _inputField = default;
-
+    private bool _saveWorld = false;
     [SerializeField]
-    private Toggle _world = default;
+    private GUI_Factory_TabsButtonPanel _worldTabsButtons = default;
+    private TabsButtonPanel _buttonPanel = null;
 
-    [SerializeField]
-    private Toggle _sentences = default;
+    private void Start()
+    {
+        _buttonPanel = _worldTabsButtons.Create();
+    }
 
     protected override void ButtonClickedListener()
     {
-        if (_sentences.isOn)
-            SaveSentences();
-        if (_world.isOn)
+        if (_saveWorld)
+        {
             SaveWorldObjs();
+        }
+        else
+        {
+            SaveSentences();
+        }
     }
 
     private void SaveWorldObjs()
     {
         var board = GameManager.Instance.GetCurrentBoard();
-
-        List<Field> obj = board.GetFieldElements();
-        List<WorldObject> worldObjs = new List<WorldObject>();
-        foreach (Field item in obj)
+        if (board != null)
         {
-            if (item.HasPredicateInstance())
+            List<Field> obj = board.GetFieldElements();
+            List<WorldObject> worldObjs = new List<WorldObject>();
+            var defaultName = _buttonPanel.GetActiveButton().GetName();
+
+            foreach (Field item in obj)
             {
-                List<Predicate> predicates = item.GetPredicatesList();
-                var constant = item.GetConstantsList();
-                List<string> worldPredicates = new List<string>();
-                foreach (var pred in predicates)
+                if (item.HasPredicateInstance())
                 {
-                    worldPredicates.Add(pred.PredicateIdentifier);
+                    List<Predicate> predicates = item.GetPredicatesList();
+                    var constant = item.GetConstantsList();
+                    List<string> worldPredicates = new List<string>();
+                    foreach (var pred in predicates)
+                    {
+                        worldPredicates.Add(pred.PredicateIdentifier);
+                    }
+
+                    List<object> coord = new List<object>
+                    {
+                            item.GetX(),
+                            item.GetZ()
+                    };
+                    worldObjs.Add(new WorldObject(constant, worldPredicates, coord));
                 }
-                List<object> coord = new List<object>();
-                coord.Add(item.GetX());
-                coord.Add(item.GetZ());
-                worldObjs.Add(new WorldObject(constant, worldPredicates, coord));
+            }
+
+            var jsonString = JsonConvert.SerializeObject(worldObjs);
+            var path = SaveDataWorld(jsonString, WORLD, defaultName);
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                _buttonPanel.GetActiveButton().SetName(Path.GetFileNameWithoutExtension(path));
             }
         }
-
-        var jsonString = JsonConvert.SerializeObject(worldObjs);
-        SaveDataWorld(jsonString, WORLD);
     }
 
     private string GetRootDirectory()
@@ -75,19 +94,21 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
     }
 
-    private void SaveDataWorld(string fileContent, string world)
+    private string SaveDataWorld(string fileContent, string world, string defaultName = "")
     {
         ExtensionFilter[] filter = new ExtensionFilter[]
         {
                 new ExtensionFilter("World", world),
         };
 
-        var path = StandaloneFileBrowser.SaveFilePanel("Save World", GetRootDirectory(), "", filter);
+        var path = StandaloneFileBrowser.SaveFilePanel("Save World", GetRootDirectory(), defaultName, filter);
         if (!string.IsNullOrEmpty(path))
         {
             File.WriteAllText(path, fileContent);
             _lastChoosenDirectory = Path.GetDirectoryName(path);
         }
+
+        return path;
     }
 
     private void SaveSentences()
@@ -130,27 +151,5 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
 
         return path;
-    }
-
-    private void SaveData(string data, string endString)
-    {
-        Debug.Log("SaveData right now");
-        Debug.Log(data);
-
-        var path = _inputField.text;
-        Directory.CreateDirectory(FOLDER);
-        var asd = FOLDER + "/" + path + ".json" + endString;
-        Debug.Log("path: " + asd);
-        // Application.persistentDataPath + "/" +
-
-        //File.WriteAllText(asd, data);
-
-        //Beim laden dann machen
-        //if (File.Exists(asd))
-        //{
-        //	File.WriteAllText(asd, data);
-        //	var jsonStringBack = File.ReadAllText(asd);
-        //	Debug.Log(jsonStringBack);
-        //}
     }
 }

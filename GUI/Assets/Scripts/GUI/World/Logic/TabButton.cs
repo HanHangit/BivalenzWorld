@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Windows.WebCam;
 
 namespace Assets.Scripts.GUI.World
 {
@@ -13,6 +14,12 @@ namespace Assets.Scripts.GUI.World
         void Destroy();
 
         void Unselect();
+
+        void Select();
+
+        void SetName(string label);
+
+        string GetName();
     }
 
     public struct TabButtonContainer

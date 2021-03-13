@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GUI.World
 {
-    public class GUI_World_PanelNavigation : MonoBehaviour, PanelNavigation
+    public class GUI_World_PanelNavigation : GUI_Factory_PanelNavigation, PanelNavigation
     {
         private PanelNavigation _panelNavigation = null;
         [SerializeField]
@@ -32,6 +32,11 @@ namespace Assets.Scripts.GUI.World
         public void RemovePanel(Panel panel)
         {
             _panelNavigation.RemovePanel(panel);
+        }
+
+        public override PanelNavigation Create()
+        {
+            return this;
         }
     }
 }

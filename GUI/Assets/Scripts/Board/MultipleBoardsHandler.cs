@@ -50,6 +50,10 @@ namespace Assets.Scripts.Boards
         public void RemoveBoard(Board board)
         {
             _boards.Remove(board);
+            if(board != null)
+            {
+                Destroy(board.gameObject);
+            }
 
             _currentBoard = _boards.LastOrDefault();
         }

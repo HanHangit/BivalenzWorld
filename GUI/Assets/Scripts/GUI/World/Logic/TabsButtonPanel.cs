@@ -5,5 +5,7 @@
         void AddTabButton(TabButton tabButton);
 
         void RemoveTabButton(TabButton tabButton);
+
+        TabButton GetActiveButton();
     }
 }

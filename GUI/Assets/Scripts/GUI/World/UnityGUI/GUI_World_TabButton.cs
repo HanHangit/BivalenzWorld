@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ namespace Assets.Scripts.GUI.World
         private Button _deleteButton = default;
         [SerializeField]
         private Color _selectionColor = Color.yellow;
+        [SerializeField]
+        private TMP_Text _name = default;
         private Color _defaultColor = Color.white;
 
         private Panel _panel = default;
@@ -70,6 +73,21 @@ namespace Assets.Scripts.GUI.World
         public void Unselect()
         {
             _button.image.color = _defaultColor;
+        }
+
+        public void Select()
+        {
+            _button.image.color = _selectionColor;
+        }
+
+        public void SetName(string label)
+        {
+            _name.text = label;
+        }
+
+        public string GetName()
+        {
+            return _name.text;
         }
     }
 }

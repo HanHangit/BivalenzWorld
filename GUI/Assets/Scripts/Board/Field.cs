@@ -186,6 +186,7 @@ public class Field : MonoBehaviour, IPredicate, IConstant
         dragObj.transform.localScale = Vector3.one * instance.GetDefaultSize();
         _predicateInstance.Init(predicate);
         _predicateInstance.SetField(this);
+        _predicateInstance.transform.SetParent(GameManager.Instance.GetCurrentBoard().transform);
     }
 
     private void TryCreatePredicate(Predicate predicate)

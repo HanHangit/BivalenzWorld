@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.Boards;
+using Assets.Scripts.GUI.World;
 using Newtonsoft.Json;
 using SFB;
 using TMPro;
@@ -19,10 +21,24 @@ public class GUI_LoadGame : GUI_Button
     [SerializeField]
     private List<Predicate> _predicates;
     [SerializeField]
-    private Toggle _openNewTabToggle;
+    private Board _boardPrefab = default;
+
+    [SerializeField]
+    private GUI_Factory_PanelNavigation _panelNavigationFactory = default;
+    private PanelNavigation _panelNavigation = null;
+    [SerializeField]
+    private GUI_Factory_Panel _boardPanel = default;
+    [SerializeField]
+    private GUI_Factory_TabsButtonPanel _buttonPanelFactory = default;
+    private TabsButtonPanel _buttonPanel = null;
 
     private string _lastChoosenDirectory = "";
 
+    private void Start()
+    {
+        _panelNavigation = _panelNavigationFactory.Create();
+        _buttonPanel = _buttonPanelFactory.Create();
+    }
 
     protected override void ButtonClickedListener()
     {
@@ -93,7 +109,7 @@ public class GUI_LoadGame : GUI_Button
         var jsonStringBack = Load(path);
         if (jsonStringBack == "")
         {
-	        return;
+            return;
         }
 
         var deserializedObj = JsonConvert.DeserializeObject<List<string>>(jsonStringBack);
@@ -108,31 +124,16 @@ public class GUI_LoadGame : GUI_Button
                 return;
             }
 
-            if (_openNewTabToggle.isOn)
+            List<string> txt = new List<string>();
+            for (var i = 0; i < deserializedObj.Count; i++)
             {
-                List<string> txt = new List<string>();
-                for (var i = 0; i < deserializedObj.Count; i++)
+                if (i < deserializedObj.Count)
                 {
-	                if (i < deserializedObj.Count)
-	                {
-		                txt.Add(deserializedObj[i]);
-	                }
+                    txt.Add(deserializedObj[i]);
                 }
+            }
 
-                manager.NavigationText.CreateTextInstance(name, txt);
-            }
-            else
-            {
-                List<string> txt = new List<string>();
-                for (var i = 0; i < deserializedObj.Count; i++)
-                {
-	                if (i < deserializedObj.Count)
-                    {
-	                    txt.Add(deserializedObj[i]);
-                    }
-                }
-                manager.NavigationText.OverwriteCurrentText(name, txt);
-            }
+            manager.NavigationText.CreateTextInstance(name, txt);
         }
     }
 
@@ -152,14 +153,12 @@ public class GUI_LoadGame : GUI_Button
 
         if (worldObjs != null && worldObjs.Length > 0)
         {
+            _panelNavigation.AddAndShowPanel(_boardPanel.Create());
+            _buttonPanel.GetActiveButton().SetName(Path.GetFileNameWithoutExtension(path));
             var board = GameManager.Instance.GetCurrentBoard();
-            CleanUpBoard(board);
 
-            Debug.Log("Anzahl: " + worldObjs.Length);
             foreach (var item in worldObjs)
             {
-                Debug.Log(item.Predicates.Count);
-
                 var xRaw = item.Tags[0].ToString();
                 int x = int.Parse(xRaw);
 

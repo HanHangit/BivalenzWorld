@@ -91,8 +91,9 @@ namespace Assets.Scripts.GUI.World
 
                 if (!isOnePanelVisible)
                 {
-                    _panels[0].Show();
-                    _activePanel = _panels[0];
+                    var lastPanel = _panels.Last();
+                    lastPanel.Show();
+                    _activePanel = lastPanel;
                 }
             }
             else
