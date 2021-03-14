@@ -121,13 +121,14 @@ public class GUI_SaveCurrentGame : GUI_Button
 
         var currentButton = manager.NavigationText.GetCurrentSelectedButton();
         //List<GUI_TextInputElement> list = manager.GetTextInputField().GetGuiTextElementsWithText();
-        //var resultSentences = new List<string>();
-        //foreach (GUI_TextInputElement item in list)
-        //{
-        //    resultSentences.Add(item.GetInputText());
-        //}
+        var resultSentences = "";
+        foreach (var item in currentButton.GetText())
+        {
+	        resultSentences += item;
+        }
 
-        //var jsonString = JsonConvert.SerializeObject(resultSentences);
+        Debug.Log(resultSentences);
+        //var jsonString = JsonConvert.SerializeObject(currentButton.GetText());
         string correctData = JsonConvert.SerializeObject(currentButton.GetText(), new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         var path = SaveDataSentences(correctData, SENTENCES);
         var rawName = Path.GetFileName(path);

@@ -13,7 +13,7 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 	[SerializeField]
 	protected GUI_TextFieldCloseButton _textfieldButtonPrefab = default;
 	[SerializeField]
-	protected GUI_TextFieldButton _textFieldButtonDefault = default;
+	protected GUI_TextFieldCloseButton _textFieldButtonDefault = default;
 	[SerializeField]
 	protected APage _page = default;
 	[SerializeField]
@@ -23,6 +23,7 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 
 	public GUI_TextFieldButton GetCurrentSelectedButton()
 	{
+		SaveText(_currentPageInstance.Button as GUI_TextFieldButton, _field);
 		return _currentSelectedButton;
     }
 
@@ -41,9 +42,20 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 		_textFieldButtonDefault.GetButton().onClick.AddListener(() => ButtonClickedListener(_textFieldButtonDefault));
 		ButtonClickedListener(_textFieldButtonDefault);
 		_createNewTextButton.onClick.AddListener(CreateNewTextButtonListener);
+		_textFieldButtonDefault.DestroyObjectEvent.AddEventListener(DefaultButtonResetClickedListener);
 	}
 
-	public void CreateTextInstance(string name, List<string> text)
+    private void DefaultButtonResetClickedListener(GUI_TextFieldCloseButton arg0)
+    {
+	    ButtonClickedListener(_textFieldButtonDefault);
+		_currentSelectedButton.SetButtonName("Untitled Sentences");
+	    if (_currentPageInstance.Page is GUI_TextInputField field)
+	    {
+			CleanField(field);
+		}
+    }
+
+    public void CreateTextInstance(string name, List<string> text)
 	{
 		GUI_TextFieldCloseButton instance = Instantiate(_textfieldButtonPrefab, _buttonAnchor);
 		var page = new Pair()
@@ -142,6 +154,7 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 	private void CleanField(GUI_TextInputField field)
 	{
 		field.DeleteSentencesTexts();
+		field.InputField[0].InputField.text = "";
 	}
 
 	public override void CreateGame()
