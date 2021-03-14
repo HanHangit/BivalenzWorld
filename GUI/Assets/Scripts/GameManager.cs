@@ -10,6 +10,7 @@ public class GameManager : ASingleton<GameManager>
     private FloatVar _debugFloatVar = default;
 
     private BoardHandler _boardHandler = null;
+    public BoardHandler BoardHandler => _boardHandler;
 
     [SerializeField]
     private BoardHandlerFactory _boardFactory = default;
@@ -40,9 +41,9 @@ public class GameManager : ASingleton<GameManager>
     [SerializeField]
     private List<GUI_GetModelPresentation> _modelPResentation = default;
     public List<GUI_GetModelPresentation> GetModelPresentation() => _modelPResentation;
+
     public void SetModelPresentation(GUI_GetModelPresentation guiGetModelPresentation)
     {
-
         _modelPResentation.Add(guiGetModelPresentation);
         CreateNewInstanceFromModelPresentationEvent.InvokeEvent(guiGetModelPresentation);
     }
@@ -100,7 +101,7 @@ public class GameManager : ASingleton<GameManager>
 
     public Camera GetTextureCamera()
     {
-        return _cameraManager.GetCurrentCamera();
+        return _textureCamera;
     }
 
     public Ray GetScreenToRay()

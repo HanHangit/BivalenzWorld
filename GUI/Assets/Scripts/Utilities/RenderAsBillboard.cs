@@ -10,7 +10,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class RenderAsBillboard : MonoBehaviour
 {
-
     [SerializeField]
     private Camera _camera = default;
     /// <summary> What Camera property to face when rendering. </summary>
@@ -27,24 +26,6 @@ public class RenderAsBillboard : MonoBehaviour
     public Vector3 Axes = new Vector3(1.0f, 1.0f, 1.0f);
 
 
-    private void Awake()
-    {
-        var manager = GameManager.Instance;
-        if (manager != null)
-        {
-            var cameraManager = manager.GetCameraManager();
-            if (cameraManager != null)
-            {
-                cameraManager.CameraChangedEvent.AddEventListener(CameraChangedListener);
-            }
-        }
-    }
-
-    private void CameraChangedListener(CameraRotation.CameraArgs arg0)
-    {
-        _camera = arg0.Camera;
-    }
-
     //private void OnWillRenderObject()
     //{
     //    if (!enabled)
@@ -57,16 +38,11 @@ public class RenderAsBillboard : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_camera == null)
-        {
-            _camera = GameManager.Instance.GetMainCamera();
-        }
-        else
-        {
-            Vector3 dir = GetDirection();
-            dir.Scale(Axes);
-            transform.forward = dir;
-        }
+        _camera = GameManager.Instance.GetTextureCamera();
+
+        Vector3 dir = GetDirection();
+        dir.Scale(Axes);
+        transform.forward = dir;
     }
 
     private Vector3 GetDirection()

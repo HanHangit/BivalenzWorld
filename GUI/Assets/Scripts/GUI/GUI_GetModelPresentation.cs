@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class GUI_GetModelPresentation : APage
 {
-	[SerializeField]
-	private TMPro.TextMeshProUGUI _text = default;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI _text = default;
 
-	public void SetText(string txt)
-	{
+    public void SetText(string txt)
+    {
 
-		_text.SetText(txt);
-	}
+        _text.SetText(txt);
+    }
 
-	private void Awake()
-	{
-		GameManager.Instance.SetModelPresentation(this);
-	}
+    private void OnEnable()
+    {
+        GameManager.Instance.SetModelPresentation(this);
+    }
 
-	private void OnDestroy()
-	{
-		GameManager.Instance.RemoveModelPresentation(this);
-	}
+    private void OnDisable()
+    {
+        GameManager.Instance.RemoveModelPresentation(this);
+    }
 }

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3461622959645182855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6676671354706794007}
+  m_Layer: 0
+  m_Name: 2D_CamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6676671354706794007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461622959645182855}
+  m_LocalRotation: {x: -0.4985143, y: -0.50148135, z: 0.4985143, w: -0.50148135}
+  m_LocalPosition: {x: 17.1, y: 35.49, z: -17.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6134269575086106608}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90.34, y: -90, z: 180}
 --- !u!1 &5243659813517127395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1126,7 @@ Transform:
   m_Children:
   - {fileID: 8421172406051998702}
   - {fileID: 7991141893524363647}
+  - {fileID: 6676671354706794007}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1115,6 +1146,7 @@ MonoBehaviour:
   _width: 8
   _heigh: 8
   _camPos: {fileID: 7991141893524363647}
+  _cam2DPos: {fileID: 6676671354706794007}
   _blackMaterial: {fileID: 2100000, guid: 22113bc6722043442a714f53edf557ed, type: 2}
   _anchor: {fileID: 6134269575086106608}
   _obj:
@@ -44137,10 +44169,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9110689064065013942}
-  m_LocalRotation: {x: 0.21263108, y: 0.67437977, z: -0.21263108, w: 0.67437977}
-  m_LocalPosition: {x: -19, y: 34, z: -17.76}
+  m_LocalRotation: {x: 0.24936712, y: 0.6616767, z: -0.24936712, w: 0.6616767}
+  m_LocalPosition: {x: -27.69, y: 35.49, z: -17.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6134269575086106608}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 35, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 41.3, y: 90, z: 0}

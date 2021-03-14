@@ -51,6 +51,7 @@ namespace Assets.Scripts.GUI.World
             var button = _buttonFactory.Create(panel);
             button.AddOnButtonSelectEventListener(ButtonSelectEventListener);
             button.AddOnButtonDeleteClickedEventListener(ButtonDeleteEventListener);
+            button.SetName(panel.DefaultName());
 
             _buttonPanel.AddTabButton(button);
         }

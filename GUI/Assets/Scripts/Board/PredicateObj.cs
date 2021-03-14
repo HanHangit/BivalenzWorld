@@ -104,11 +104,6 @@ public class PredicateObj : MonoBehaviour
             _worldCanvasInstance = Instantiate(_worldCanvasPrefab, this.transform.position, Quaternion.identity, this.transform);
             _worldCanvasInstance.transform.localPosition = new Vector3(-2.0f, 1.5f, 0f);
 
-            if (GameManager.Instance.GetCameraManager().GetCurrentCamMode() == CameraRotation.CameraMode.Cam2D)
-            {
-                _worldCanvasInstance.transform.localPosition += new Vector3(1, 10);
-            }
-
             _worldCanvasPrefab.transform.localScale = Vector3.one * 1f;
             SetConstantStringToWorldCanvas();
         }

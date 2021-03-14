@@ -40,7 +40,7 @@ public class ConstantButton : GUI_Button
     private void ValidateOverlay()
     {
         var board = GameManager.Instance.GetCurrentBoard();
-        if (_instance != null)
+        if (_instance != null && board != null)
         {
             if (board.IsConstantUsed(_constant) && !_instance.GetConstantsList().Contains(_constant))
             {

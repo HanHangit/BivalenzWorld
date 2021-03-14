@@ -14,5 +14,7 @@ namespace Assets.Scripts.GUI.World
         bool IsVisible();
 
         void Show();
+
+        string DefaultName();
     }
 }

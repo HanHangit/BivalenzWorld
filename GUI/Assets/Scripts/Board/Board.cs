@@ -16,7 +16,10 @@ public class Board : MonoBehaviour, IDebug
 
     [SerializeField]
     private Transform _camPos = default;
+    [SerializeField]
+    private Transform _cam2DPos = default;
     public Transform CamPos => _camPos;
+    public Transform Cam2DPos => _cam2DPos;
 
     [SerializeField]
     private Material _blackMaterial = default;

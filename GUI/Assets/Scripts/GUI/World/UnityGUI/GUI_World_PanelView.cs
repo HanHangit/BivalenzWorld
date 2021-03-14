@@ -13,10 +13,17 @@ namespace Assets.Scripts.GUI.World
     {
         [SerializeField]
         private RectTransform _content = default;
+        [SerializeField]
+        private string _defaultName = "Unknown";
 
         public void Show()
         {
             _content.gameObject.SetActive(true);
+        }
+
+        public string DefaultName()
+        {
+            return _defaultName;
         }
 
         public void Hide()

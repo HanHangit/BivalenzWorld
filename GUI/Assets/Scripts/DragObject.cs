@@ -101,7 +101,7 @@ public class DragObject : MonoBehaviour
                     selection.SelectObj();
                 }
             }
-            else if (_predicate.GetField() == field)
+            else
             {
                 _rootObj.position = _startPos;
             }

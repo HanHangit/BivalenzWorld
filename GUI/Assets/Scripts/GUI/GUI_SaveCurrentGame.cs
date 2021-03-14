@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Newtonsoft.Json;
 using System.IO;
-using System.Net.Configuration;
 using Assets.Scripts.GUI.World;
 using SFB;
-using TMPro;
 using Validator;
 
 public class GUI_SaveCurrentGame : GUI_Button
@@ -124,7 +119,7 @@ public class GUI_SaveCurrentGame : GUI_Button
         var resultSentences = "";
         foreach (var item in currentButton.GetText())
         {
-	        resultSentences += item;
+            resultSentences += item;
         }
 
         Debug.Log(resultSentences);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,13 +42,25 @@ namespace Assets.Scripts
         private List<DragObject> GetRaycastHits()
         {
             List<DragObject> resultObjects = new List<DragObject>();
+            float minDistance = float.MaxValue;
+            DragObject obj = null;
+
             foreach (RaycastHit hit in Physics.RaycastAll(GameManager.Instance.GetScreenToRay()))
             {
                 var comp = hit.collider.GetComponent<DragObject>();
-                if (comp != null)
+                if (hit.distance < minDistance)
                 {
-                    resultObjects.Add(comp);
+                    if (comp != null)
+                    {
+                        obj = comp;
+                        minDistance = hit.distance;
+                    }
                 }
+            }
+
+            if (obj != null)
+            {
+                resultObjects.Add(obj);
             }
 
             return resultObjects;
