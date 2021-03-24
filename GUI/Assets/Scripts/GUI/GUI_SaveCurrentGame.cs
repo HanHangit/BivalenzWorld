@@ -39,7 +39,7 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
     }
 
-    public void SaveWorldObjs()
+    public bool SaveWorldObjs()
     {
         var board = GameManager.Instance.GetCurrentBoard();
         if (board != null)
@@ -75,8 +75,11 @@ public class GUI_SaveCurrentGame : GUI_Button
             if (!string.IsNullOrEmpty(path))
             {
                 _buttonPanel.GetActiveButton().SetName(Path.GetFileNameWithoutExtension(path));
+                return true;
             }
         }
+
+        return false;
     }
 
     private string GetRootDirectory()
@@ -124,12 +127,12 @@ public class GUI_SaveCurrentGame : GUI_Button
         return path;
     }
 
-    public void SaveSentences()
+    public bool SaveSentences()
     {
         var manager = GameManager.Instance;
         if (manager == null)
         {
-            return;
+            return false;
         }
 
         var currentButton = manager.NavigationText.GetCurrentSelectedButton();
@@ -147,6 +150,8 @@ public class GUI_SaveCurrentGame : GUI_Button
         var rawName = Path.GetFileName(path);
         var name = rawName.Split('.')[0];
         currentButton.SetButtonName(name);
+
+        return !string.IsNullOrEmpty(path);
     }
 
     private string SaveDataSentences(string fileContent, GUI_TextFieldButton currentButton, string sentences)
