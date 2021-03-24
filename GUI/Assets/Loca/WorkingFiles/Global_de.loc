@@ -23,12 +23,12 @@ CreateNewSentences {Erstellt einen neuen Satz.}
 TetPredicate        {Tet(a): Das Objekt a ist ein Tetraeder.}
 SmallPredicate      {Small(a): Das Objekt a ist klein.}
 LeftOfPredicate     {LeftOf(a,b): Das Objekt a befindet sich links von b.}
-SameColPredicate    {SameCol(a,b): Die Objekte a und b befinden sich auf der gleichen Spalte.}
+SameColPredicate    {SameCol(a,b): Die Objekte a und b befinden sich in der gleichen Spalte.}
 SmallerPredicate    {Smaller(a,b): Das Objekt a ist kleiner als Objekt b.}
 CubePredicate       {Cube(a): Das Objekt a ist ein Würfel.}
 MediumPredicate     {Medium(a): Das Objekt a besitzt eine mittlere Größe.}
 RightOfPredicate    {RightOf(a,b): Das Objekt a befindet sich rechts von Objekt b.}
-SameRowPredicate    {SameRow(a,b): Die Objekte a und b befinden sich auf der gleichen Zeile.}
+SameRowPredicate    {SameRow(a,b): Die Objekte a und b befinden sich in der gleichen Zeile.}
 LargerPredicate     {Larger(a,b): Das Objekt a ist größer als Objekt b.}
 DodecPredicate      {Dodec(a): Das Objekt a ist ein Dodekaeder.}
 LargePredicate      {Large(a): Das Objekt a ist groß.}
