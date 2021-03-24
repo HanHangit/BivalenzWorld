@@ -83,7 +83,7 @@ MonoBehaviour:
     Value: 'LeftOf(a,b): Das Objekt a befindet sich links von b.'
     Tags: []
   - Key: SameColPredicate
-    Value: 'SameCol(a,b): Die Objekte a und b befinden sich auf der gleichen Spalte.'
+    Value: 'SameCol(a,b): Die Objekte a und b befinden sich in der gleichen Spalte.'
     Tags: []
   - Key: SmallerPredicate
     Value: 'Smaller(a,b): Das Objekt a ist kleiner als Objekt b.'
@@ -98,7 +98,7 @@ MonoBehaviour:
     Value: 'RightOf(a,b): Das Objekt a befindet sich rechts von Objekt b.'
     Tags: []
   - Key: SameRowPredicate
-    Value: 'SameRow(a,b): Die Objekte a und b befinden sich auf der gleichen Zeile.'
+    Value: 'SameRow(a,b): Die Objekte a und b befinden sich in der gleichen Zeile.'
     Tags: []
   - Key: LargerPredicate
     Value: "Larger(a,b): Das Objekt a ist gr\xF6\xDFer als Objekt b."
