@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml;
 using Assets.Scripts.Boards;
 using Assets.Scripts.GUI.World;
 using UnityEngine;
@@ -20,10 +21,20 @@ public class GameManager : ASingleton<GameManager>
     [SerializeField]
     private Camera _mainCamera = default;
     [SerializeField]
+    private RectTransform _contentRect = default;
+    [SerializeField]
     private SelectionManager _selectionManager = default;
     [SerializeField]
     private GUI_Game _guiGame = default;
     public GUI_Game GUIGame => _guiGame;
+    [SerializeField]
+    private GUI_MessageBox _messageBoxPrefab = default;
+    [SerializeField]
+    private RectTransform _canvasRoot = default;
+    [SerializeField]
+    private GUI_SaveCurrentGame _saveWorld = default;
+    [SerializeField]
+    private GUI_SaveCurrentGame _saveSentence = default;
 
     [SerializeField]
     private GUI_Factory_TabButton _buttonPrefab = default;
@@ -31,8 +42,6 @@ public class GameManager : ASingleton<GameManager>
 
     [SerializeField]
     private RectTransform _scaleRectTransform = default;
-    [SerializeField]
-    private RectTransform _gameRectTransform = default;
     [SerializeField]
     private CanvasScaler _canvasScaler = default;
 
@@ -77,7 +86,6 @@ public class GameManager : ASingleton<GameManager>
 
     private void Start()
     {
-        _boardHandler = _boardFactory.CreateBoardHandler();
         CheckDebugList(_debugFloatVar.CurrentValue);
     }
 
@@ -87,6 +95,16 @@ public class GameManager : ASingleton<GameManager>
         {
             _debugList.Add(component);
         }
+    }
+
+    public GUI_MessageBox CreateMessageBox()
+    {
+        return Instantiate(_messageBoxPrefab, _canvasRoot);
+    }
+
+    public void SaveCurrentWorld()
+    {
+        _saveWorld.SaveWorldObjs();
     }
 
     public Board GetCurrentBoard()
@@ -107,8 +125,13 @@ public class GameManager : ASingleton<GameManager>
     public Ray GetScreenToRay()
     {
         float xAspect = 1 / _scaleRectTransform.localScale.x;
-        float yAspect = _canvasScaler.referenceResolution.y / _mainCamera.pixelHeight;
-        var mousePos = new Vector3(Input.mousePosition.x * xAspect, Input.mousePosition.y * yAspect, Input.mousePosition.z);
+        float yAspect = 1 / _scaleRectTransform.localScale.y;
+
+        float xTextureOffset = _textureCamera.pixelWidth / _contentRect.rect.width;
+        float yTextureOffset = _textureCamera.pixelHeight / _contentRect.rect.height;
+
+        var mousePos = new Vector3(Input.mousePosition.x * xAspect * xTextureOffset, Input.mousePosition.y * yAspect * yTextureOffset, Input.mousePosition.z);
+
         return _textureCamera.ScreenPointToRay(mousePos);
     }
 
@@ -151,6 +174,8 @@ public class GameManager : ASingleton<GameManager>
     {
         _debugFloatVar.ValueChangedEvent.AddEventListener(DebugModeChangedListener);
         _debugFloatVar.ForceChangedEvent();
+
+        _boardHandler = _boardFactory.CreateBoardHandler();
     }
 
     private void CheckDebugList(float newValue)

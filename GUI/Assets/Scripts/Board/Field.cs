@@ -150,6 +150,7 @@ public class Field : MonoBehaviour, IPredicate, IConstant
         {
             manager.GetValidation().SetPresentationLayout();
             manager.GetTextInputField().ResetValidationOnTexts();
+            manager.GetCurrentBoard().SetUnsavedChanges();
         }
     }
 

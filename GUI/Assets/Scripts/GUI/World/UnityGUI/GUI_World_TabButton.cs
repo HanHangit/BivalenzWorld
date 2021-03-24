@@ -63,6 +63,7 @@ namespace Assets.Scripts.GUI.World
         public void SetRoot(RectTransform root)
         {
             transform.SetParent(root);
+            transform.localScale = Vector3.one;
         }
 
         public void Destroy()

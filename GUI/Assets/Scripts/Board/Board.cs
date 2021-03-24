@@ -14,12 +14,18 @@ public class Board : MonoBehaviour, IDebug
     [SerializeField]
     private int _heigh = 8;
 
+    private bool _hasUnsavedChanges = false;
+    public bool HasUnsavedChanges => _hasUnsavedChanges;
+
     [SerializeField]
     private Transform _camPos = default;
     [SerializeField]
     private Transform _cam2DPos = default;
     public Transform CamPos => _camPos;
     public Transform Cam2DPos => _cam2DPos;
+
+    private string _savePath = "";
+    public string SavePath => _savePath;
 
     [SerializeField]
     private Material _blackMaterial = default;
@@ -32,7 +38,19 @@ public class Board : MonoBehaviour, IDebug
     private void Awake()
     {
         GameManager.Instance?.AddObjToDebugList(this);
+        _hasUnsavedChanges = true;
         CreateMap();
+    }
+
+    public void SetSavePath(string path)
+    {
+        _savePath = path;
+        _hasUnsavedChanges = false;
+    }
+
+    public void SetUnsavedChanges()
+    {
+        _hasUnsavedChanges = true;
     }
 
     public Field GetFieldFromCoord(int x, int z)

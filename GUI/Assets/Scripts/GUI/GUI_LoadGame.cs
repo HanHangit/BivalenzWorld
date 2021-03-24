@@ -133,7 +133,8 @@ public class GUI_LoadGame : GUI_Button
                 }
             }
 
-            manager.NavigationText.CreateTextInstance(name, txt);
+            var instance = manager.NavigationText.CreateTextInstance(name, txt);
+            instance.SetSavePath(path);
         }
     }
 
@@ -156,6 +157,7 @@ public class GUI_LoadGame : GUI_Button
             _panelNavigation.AddAndShowPanel(_boardPanel.Create());
             _buttonPanel.GetActiveButton().SetName(Path.GetFileNameWithoutExtension(path));
             var board = GameManager.Instance.GetCurrentBoard();
+            board.SetSavePath(path);
 
             foreach (var item in worldObjs)
             {

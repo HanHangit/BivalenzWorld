@@ -17,7 +17,7 @@ namespace Assets.Scripts.GUI.World
 
         private TabsButtonPanel _tabsButtonPanel = null;
 
-        private void Start()
+        private void Awake()
         {
             _tabsButtonPanel = _tabsButtonPanelFactory.Create();
 

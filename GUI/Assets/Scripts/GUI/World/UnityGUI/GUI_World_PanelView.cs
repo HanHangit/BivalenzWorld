@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.GUI.World.UnityGUI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -26,6 +27,29 @@ namespace Assets.Scripts.GUI.World
             return _defaultName;
         }
 
+        public event Action<Panel> PanelDestroyedEvent;
+
+        public void Destroy()
+        {
+            var destroyRestriction = _content.GetComponentInChildren<IPanelDestroyRestriction>();
+            if (destroyRestriction != null)
+            {
+                destroyRestriction.PanelViewDestroyedEvent -= PanelViewDestroyEventListener;
+                destroyRestriction.PanelViewDestroyedEvent += PanelViewDestroyEventListener;
+                destroyRestriction.Destroy();
+            }
+            else
+            {
+                PanelViewDestroyEventListener();
+            }
+        }
+
+        private void PanelViewDestroyEventListener()
+        {
+            PanelDestroyedEvent?.Invoke(this);
+            Destroy(gameObject);
+        }
+
         public void Hide()
         {
             _content.gameObject.SetActive(false);
@@ -34,13 +58,9 @@ namespace Assets.Scripts.GUI.World
         public void Initialize(RectTransform rect)
         {
             transform.SetParent(rect);
-            _content.position = rect.position;
-            _content.sizeDelta = rect.sizeDelta;
-        }
-
-        public void Destroy()
-        {
-            Destroy(gameObject);
+            _content.position = Vector3.zero;
+            _content.sizeDelta = Vector2.zero;
+            _content.localScale = Vector3.one;
         }
 
         public bool IsVisible()

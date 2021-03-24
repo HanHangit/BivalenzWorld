@@ -18,6 +18,8 @@ public class GUI_SaveCurrentGame : GUI_Button
     private bool _saveWorld = false;
     [SerializeField]
     private GUI_Factory_TabsButtonPanel _worldTabsButtons = default;
+    [SerializeField]
+    private bool _showDialog = false;
     private TabsButtonPanel _buttonPanel = null;
 
     private void Start()
@@ -37,7 +39,7 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
     }
 
-    private void SaveWorldObjs()
+    public void SaveWorldObjs()
     {
         var board = GameManager.Instance.GetCurrentBoard();
         if (board != null)
@@ -68,7 +70,7 @@ public class GUI_SaveCurrentGame : GUI_Button
             }
 
             var jsonString = JsonConvert.SerializeObject(worldObjs);
-            var path = SaveDataWorld(jsonString, WORLD, defaultName);
+            var path = SaveDataWorld(jsonString, WORLD, board, defaultName);
 
             if (!string.IsNullOrEmpty(path))
             {
@@ -89,24 +91,40 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
     }
 
-    private string SaveDataWorld(string fileContent, string world, string defaultName = "")
+    private string SaveDataWorld(string fileContent, string world, Board board, string defaultName = "")
     {
         ExtensionFilter[] filter = new ExtensionFilter[]
         {
                 new ExtensionFilter("World", world),
         };
 
-        var path = StandaloneFileBrowser.SaveFilePanel("Save World", GetRootDirectory(), defaultName, filter);
+        var path = board.SavePath;
+
+        if (string.IsNullOrEmpty(path))
+        {
+            path = StandaloneFileBrowser.SaveFilePanel("Save World", GetRootDirectory(), defaultName, filter);
+        }
+        else if (_showDialog)
+        {
+            var directory = Path.GetDirectoryName(path);
+            path = StandaloneFileBrowser.SaveFilePanel("Save World", directory, defaultName, filter);
+        }
+
         if (!string.IsNullOrEmpty(path))
         {
+            if (!Path.HasExtension(path) || Path.GetExtension(path) != "." + WORLD)
+            {
+                path += "." + WORLD;
+            }
             File.WriteAllText(path, fileContent);
             _lastChoosenDirectory = Path.GetDirectoryName(path);
+            board.SetSavePath(path);
         }
 
         return path;
     }
 
-    private void SaveSentences()
+    public void SaveSentences()
     {
         var manager = GameManager.Instance;
         if (manager == null)
@@ -125,25 +143,40 @@ public class GUI_SaveCurrentGame : GUI_Button
         Debug.Log(resultSentences);
         //var jsonString = JsonConvert.SerializeObject(currentButton.GetText());
         string correctData = JsonConvert.SerializeObject(currentButton.GetText(), new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-        var path = SaveDataSentences(correctData, SENTENCES);
+        var path = SaveDataSentences(correctData, currentButton, SENTENCES);
         var rawName = Path.GetFileName(path);
         var name = rawName.Split('.')[0];
         currentButton.SetButtonName(name);
     }
 
-    private string SaveDataSentences(string fileContent, string sentences)
+    private string SaveDataSentences(string fileContent, GUI_TextFieldButton currentButton, string sentences)
     {
         ExtensionFilter[] filter = new ExtensionFilter[]
         {
                 new ExtensionFilter("Sentence", sentences),
         };
 
-        var path = StandaloneFileBrowser.SaveFilePanel("Save Sentence", GetRootDirectory(), "", filter);
+        var path = currentButton.SavePath;
+
+        if (string.IsNullOrEmpty(path))
+        {
+            path = StandaloneFileBrowser.SaveFilePanel("Save Sentence", GetRootDirectory(), currentButton.GetButtonName(), filter);
+        }
+        else if (_showDialog)
+        {
+            var directory = Path.GetDirectoryName(path);
+            path = StandaloneFileBrowser.SaveFilePanel("Save Sentence", directory, currentButton.GetButtonName(), filter);
+        }
 
         if (!string.IsNullOrEmpty(path))
         {
+            if (!Path.HasExtension(path) || Path.GetExtension(path) != "." + SENTENCES)
+            {
+                path += "." + SENTENCES;
+            }
             File.WriteAllText(path, fileContent);
             _lastChoosenDirectory = Path.GetDirectoryName(path);
+            currentButton.SetSavePath(path);
         }
 
         return path;

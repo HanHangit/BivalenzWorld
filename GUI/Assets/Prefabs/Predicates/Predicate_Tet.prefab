@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 6515586766836858409}
-  _selectedMaterial: {fileID: 2100000, guid: 3f02058e45752a844babce1600babf88, type: 2}
   _predicate: {fileID: 1846696186036730428}
   _rootObj: {fileID: 3935459598859905763}
 --- !u!65 &6806202121273269393

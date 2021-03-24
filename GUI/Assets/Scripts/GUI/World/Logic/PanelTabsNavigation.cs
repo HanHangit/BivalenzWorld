@@ -27,6 +27,20 @@ namespace Assets.Scripts.GUI.World
 
             AddPanelButton(panel);
             ShowNewPanel(panel);
+            AddPanelDestroyEventListener(panel);
+        }
+
+        private void AddPanelDestroyEventListener(Panel panel)
+        {
+            panel.PanelDestroyedEvent += PanelDestroyedEventListener;
+        }
+
+        private void PanelDestroyedEventListener(Panel panel)
+        {
+            _buttonPanel.RemoveTabButton(_buttonPanel.GetActiveButton());
+            _panels.Remove(panel);
+
+            UpdatePanels();
         }
 
         public void RemovePanel(Panel panel)
@@ -35,13 +49,6 @@ namespace Assets.Scripts.GUI.World
 
             if (currentPanel != null)
             {
-                _panels.Remove(currentPanel);
-
-                if (currentPanel.IsVisible())
-                {
-                    UpdatePanels();
-                }
-
                 currentPanel.Destroy();
             }
         }
@@ -60,7 +67,6 @@ namespace Assets.Scripts.GUI.World
         {
             RemovePanel(arg0.Panel);
 
-            _buttonPanel.RemoveTabButton(arg0.Button);
         }
 
         private void ButtonSelectEventListener(TabButtonContainer arg0)

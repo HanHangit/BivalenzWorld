@@ -29,14 +29,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5525157658706723061}
+  - {fileID: 5666529015550066564}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 800}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1080}
+  m_SizeDelta: {x: -720, y: -280}
   m_Pivot: {x: 0.0000000069849193, y: 0.000000034458935}
 --- !u!222 &6432339927880441904
 CanvasRenderer:
@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afc7cf3f563fbad4b82f864712268148, type: 3}
---- !u!224 &5525157658706723061 stripped
+--- !u!224 &5666529015550066564 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 148270792515287530, guid: afc7cf3f563fbad4b82f864712268148,
     type: 3}

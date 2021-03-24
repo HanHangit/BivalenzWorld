@@ -22,6 +22,11 @@ namespace Assets.Scripts.GUI.World.Debug
             _button.onClick.AddListener(ButtonOnClickListener);
         }
 
+        private void Start()
+        {
+            _panelNavigation.AddAndShowPanel(Instantiate(_viewPanel));
+        }
+
         private void ButtonOnClickListener()
         {
             _panelNavigation.AddAndShowPanel(Instantiate(_viewPanel));
