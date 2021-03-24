@@ -93,9 +93,22 @@ public class GUI_Navigation_Text : GUI_TabNavigation
         _currentSelectedButton.Hover();
     }
 
-    private void RemoveTextInstance(GUI_TextFieldButton arg0)
+    private void MessageBoxDontSaveButtonClickedEventListener(GUI_TextFieldButton obj)
     {
-        var instance = _textPanelsInstances.Find(x => x.Button == arg0);
+        DestroyButton(obj);
+    }
+
+    private void MessageBoxSaveButtonClickedEventListener(GUI_TextFieldButton obj)
+    {
+        if (GameManager.Instance.SaveCurrentSentences(obj))
+        {
+            DestroyButton(obj);
+        }
+    }
+
+    private void DestroyButton(GUI_TextFieldButton button)
+    {
+        var instance = _textPanelsInstances.Find(x => x.Button == button);
         if (instance != null)
         {
             _textPanelsInstances.Remove(instance);
@@ -104,6 +117,14 @@ public class GUI_Navigation_Text : GUI_TabNavigation
 
         var fieldButton = _textPanelsInstances[0];
         ButtonClickedListener(fieldButton.Button);
+    }
+
+    private void RemoveTextInstance(GUI_TextFieldButton arg0)
+    {
+        var messageBox = GameManager.Instance.CreateMessageBox();
+        messageBox.Init($"Do you want to save the changes you made in \"{arg0.GetButtonName()}\"?");
+        messageBox.OnSaveButtonClickedEvent.AddListener(() => MessageBoxSaveButtonClickedEventListener(arg0));
+        messageBox.OnDontSaveButtonClickedEvent.AddListener(() => MessageBoxDontSaveButtonClickedEventListener(arg0));
     }
 
     private void CreateNewTextButtonListener()

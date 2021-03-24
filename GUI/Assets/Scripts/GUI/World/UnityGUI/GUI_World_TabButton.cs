@@ -81,6 +81,16 @@ namespace Assets.Scripts.GUI.World
             _button.image.color = _selectionColor;
         }
 
+        public bool IsSelected()
+        {
+            return _button.image.color == _selectionColor;
+        }
+
+        public Panel GetPanel()
+        {
+            return _panel;
+        }
+
         public void SetName(string label)
         {
             _name.text = label;

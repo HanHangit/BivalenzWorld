@@ -17,6 +17,10 @@ namespace Assets.Scripts.GUI.World
 
         void Select();
 
+        bool IsSelected();
+
+        Panel GetPanel();
+
         void SetName(string label);
 
         string GetName();

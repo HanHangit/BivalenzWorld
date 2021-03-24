@@ -62,10 +62,15 @@ public class GUI_TabNavigation : MonoBehaviour
         Pair obj = _textPanelsInstances.Find(x => x.Button == arg0);
         if (obj != null)
         {
-            _textPanelsInstances.Remove(obj);
-            Destroy(obj.Button.gameObject);
-            Destroy(obj.Page.gameObject);
+            DestroyButton(obj);
         }
+    }
+
+    private void DestroyButton(Pair obj)
+    {
+        _textPanelsInstances.Remove(obj);
+        Destroy(obj.Button.gameObject);
+        Destroy(obj.Page.gameObject);
     }
 
     private void SetButtonListener(GUI_TabButton buttonInstance, EType type)

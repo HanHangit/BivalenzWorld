@@ -37,8 +37,7 @@ public class GUI_TextInputField : APage
 
 	public void DeleteSentencesTexts()
 	{
-
-		for (int i = _inputFields.Count-1; i >= 1 ; i--)
+        for (int i = _inputFields.Count-1; i >= 1 ; i--)
 		{
 			var instance = _inputFields[i];
 			_inputFields.Remove(instance);

@@ -37,7 +37,7 @@ namespace Assets.Scripts.GUI.World
 
         private void PanelDestroyedEventListener(Panel panel)
         {
-            _buttonPanel.RemoveTabButton(_buttonPanel.GetActiveButton());
+            _buttonPanel.RemoveTabButtonFromPanel(panel);
             _panels.Remove(panel);
 
             UpdatePanels();

@@ -102,9 +102,14 @@ public class GameManager : ASingleton<GameManager>
         return Instantiate(_messageBoxPrefab, _canvasRoot);
     }
 
-    public bool SaveCurrentWorld()
+    public bool SaveCurrentWorld(Board saveBoard)
     {
-        return _saveWorld.SaveWorldObjs();
+        return _saveWorld.SaveWorldObjs(saveBoard);
+    }
+
+    public bool SaveCurrentSentences(GUI_TextFieldButton sentenceButton)
+    {
+        return _saveSentence.SaveSentences(sentenceButton);
     }
 
     public Board GetCurrentBoard()

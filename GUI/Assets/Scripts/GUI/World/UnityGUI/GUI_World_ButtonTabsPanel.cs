@@ -48,13 +48,28 @@ namespace Assets.Scripts.GUI.World
         public void RemoveTabButton(TabButton tabButton)
         {
             _tabButtons.Remove(tabButton);
-            tabButton.Destroy();
-
-            _activeButton = _tabButtons.LastOrDefault();
-
-            if (_activeButton != null)
+            if (_activeButton == tabButton)
             {
-                _activeButton.Select();
+                _activeButton = _tabButtons.LastOrDefault();
+
+                if (_activeButton != null)
+                {
+                    _activeButton.Select();
+                }
+            }
+            tabButton.Destroy();
+        }
+
+        public void RemoveTabButtonFromPanel(Panel panel)
+        {
+            for (var i = 0; i < _tabButtons.Count; i++)
+            {
+                var tabButton = _tabButtons[i];
+                if (tabButton.GetPanel() == panel)
+                {
+                    RemoveTabButton(tabButton);
+                    break;
+                }
             }
         }
 

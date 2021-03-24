@@ -31,7 +31,7 @@ public class GUI_SaveCurrentGame : GUI_Button
     {
         if (_saveWorld)
         {
-            SaveWorldObjs();
+            SaveWorldObjs(null);
         }
         else
         {
@@ -39,9 +39,11 @@ public class GUI_SaveCurrentGame : GUI_Button
         }
     }
 
-    public bool SaveWorldObjs()
+    public bool SaveWorldObjs(Board saveBoard)
     {
-        var board = GameManager.Instance.GetCurrentBoard();
+        var board = saveBoard;
+        board = GameManager.Instance.GetCurrentBoard();
+
         if (board != null)
         {
             List<Field> obj = board.GetFieldElements();
@@ -127,7 +129,7 @@ public class GUI_SaveCurrentGame : GUI_Button
         return path;
     }
 
-    public bool SaveSentences()
+    public bool SaveSentences(GUI_TextFieldButton button = null)
     {
         var manager = GameManager.Instance;
         if (manager == null)
@@ -135,7 +137,12 @@ public class GUI_SaveCurrentGame : GUI_Button
             return false;
         }
 
-        var currentButton = manager.NavigationText.GetCurrentSelectedButton();
+        var currentButton = button;
+        if(currentButton == null)
+        {
+            currentButton = manager.NavigationText.GetCurrentSelectedButton();
+        }
+
         //List<GUI_TextInputElement> list = manager.GetTextInputField().GetGuiTextElementsWithText();
         var resultSentences = "";
         foreach (var item in currentButton.GetText())
@@ -147,9 +154,11 @@ public class GUI_SaveCurrentGame : GUI_Button
         //var jsonString = JsonConvert.SerializeObject(currentButton.GetText());
         string correctData = JsonConvert.SerializeObject(currentButton.GetText(), new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         var path = SaveDataSentences(correctData, currentButton, SENTENCES);
-        var rawName = Path.GetFileName(path);
-        var name = rawName.Split('.')[0];
-        currentButton.SetButtonName(name);
+        if (!string.IsNullOrEmpty(path))
+        {
+            var name = Path.GetFileNameWithoutExtension(path);
+            currentButton.SetButtonName(name);
+        }
 
         return !string.IsNullOrEmpty(path);
     }

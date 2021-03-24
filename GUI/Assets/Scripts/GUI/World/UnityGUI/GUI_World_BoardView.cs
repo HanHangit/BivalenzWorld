@@ -67,7 +67,7 @@ namespace Assets.Scripts.GUI.World.UnityGUI
 
         private void SaveButtonClickedEventListener()
         {
-            if (GameManager.Instance.SaveCurrentWorld())
+            if (GameManager.Instance.SaveCurrentWorld(_instanceBoard))
             {
                 PanelViewDestroyedEvent?.Invoke();
             }
