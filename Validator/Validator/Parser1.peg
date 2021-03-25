@@ -11,6 +11,15 @@
 		return list;
 	}
 
+	private List<Argument> BuildArguments(List<Argument> list, List<Argument> argument)
+	{
+		foreach(var listArgument in argument)
+		{
+			list.Add(listArgument);
+		}
+		return list;
+	}
+
 	private List<Formula> BuildGenericFormula(Formula formula, Formula argument)
 	{
 		return new List<Formula> { argument, formula };
@@ -76,7 +85,8 @@ predicate <Formula> = n:predicateString openedBracket argument:argument closedBr
 function <Argument> = n:functionString openedBracket argument:argument closedBracked { new Function(argument, n,n) }
 
 //Arguments
-argument <List<Argument>> -memoize	= argument:argument argumentDelimiter constant:constant  { BuildArguments(argument, constant)}
+argument <List<Argument>> -memoize	= argument:argument argumentDelimiter secondArgument:argument  { BuildArguments(argument, secondArgument)}
+									/ argument:argument argumentDelimiter constant:constant  { BuildArguments(argument, constant)}
 									/ argument:argument argumentDelimiter variable:variable  { BuildArguments(argument, variable)}
 									/ singleArgument:singleArgument { new List<Argument> { singleArgument }}
 

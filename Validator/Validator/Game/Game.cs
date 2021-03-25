@@ -50,7 +50,10 @@ namespace Validator.Game
 
         internal void AddTemporaryWorldObject(WorldObject obj)
         {
-            _temporaryWorldObjects.Add(obj);
+            if (!_temporaryWorldObjects.Any(o => o.Consts.Any(o2 => obj.Consts.Contains(o2))))
+            {
+                _temporaryWorldObjects.Add(obj);
+            }
         }
 
         internal void ReplaceWorldObject(WorldObject obj)

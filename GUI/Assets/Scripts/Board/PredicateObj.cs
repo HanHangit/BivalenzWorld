@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Validator.Game;
 
 public class PredicateObj : MonoBehaviour
 {
@@ -55,13 +56,12 @@ public class PredicateObj : MonoBehaviour
         if (_constant.Contains(constant))
         {
             _constant.Remove(constant);
-            SpawnText();
         }
         else
         {
             _constant.Add(constant);
-            SpawnText();
         }
+        SpawnText();
     }
 
     public void AddTemporaryConstant(string constant)
@@ -69,8 +69,8 @@ public class PredicateObj : MonoBehaviour
         if (!_temporaryConstants.Contains(constant))
         {
             _temporaryConstants.Add(constant);
-            SpawnText();
         }
+        SpawnText();
     }
 
     public void RemoveTemporaryConstants()
@@ -99,10 +99,17 @@ public class PredicateObj : MonoBehaviour
             Destroy(_worldCanvasInstance.gameObject);
             _worldCanvasInstance = null;
         }
-        else if (_worldCanvasInstance == null)
+        else if (_worldCanvasInstance == null && (GetConstant().Any() || GetTemporaryConstants().Any()))
         {
             _worldCanvasInstance = Instantiate(_worldCanvasPrefab, this.transform.position, Quaternion.identity, this.transform);
-            _worldCanvasInstance.transform.localPosition = new Vector3(-2.0f, 1.5f, 0f);
+            if(GameManager.Instance.GetCameraManager().GetCurrentCamMode() == CameraRotation.CameraMode.Cam2D)
+            {
+                _worldCanvasInstance.transform.localPosition = new Vector3(-1f, 4.5f, 0f);
+            }
+            else
+            {
+                _worldCanvasInstance.transform.localPosition = new Vector3(-3f, 1.5f, 0f);
+            }
 
             _worldCanvasPrefab.transform.localScale = Vector3.one * 1f;
             SetConstantStringToWorldCanvas();

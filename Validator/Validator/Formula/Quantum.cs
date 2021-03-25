@@ -169,7 +169,7 @@ namespace Validator
             }
             else
             {
-                var infoVariable = new InfoMessage(game, this, $"So you believe that some object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables)));
+                var infoVariable = new InfoMessage(game, this, $"So you believe that some object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables, game)));
                 return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is false", infoVariable);
             }
         }
@@ -180,7 +180,7 @@ namespace Validator
 
             if (game.Guess)
             {
-                var infoVariable = new InfoMessage(game, this, $"So you believe that every object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables)));
+                var infoVariable = new InfoMessage(game, this, $"So you believe that every object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables, game)));
                 return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is true", infoVariable);
             }
             else
@@ -191,7 +191,7 @@ namespace Validator
             }
         }
 
-        private Dictionary<string, string> SetResultVariableConstValue(EValidationResult result, Dictionary<string, string> dictVariables)
+        private Dictionary<string, string> SetResultVariableConstValue(EValidationResult result, Dictionary<string, string> dictVariables, Game.Game game)
         {
             Dictionary<string, string> newDictionary = new Dictionary<string, string>();
 
@@ -217,6 +217,17 @@ namespace Validator
             else
             {
                 newDictionary.Add(keyValue.Key, keyValue.Value);
+            }
+
+            if (keyValue.Value.StartsWith("n"))
+            {
+                var worldConstant = keyValue.Value;
+                var worldObject = game.WorldObjects.Find(obj => obj.Consts.Contains(worldConstant));
+                if (worldObject.Tags != null)
+                {
+                    worldObject.Consts.Add(worldConstant);
+                }
+                game.AddTemporaryWorldObject(worldObject);
             }
 
             return newDictionary;

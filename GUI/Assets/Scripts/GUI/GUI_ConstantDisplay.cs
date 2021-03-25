@@ -22,10 +22,10 @@ public class GUI_ConstantDisplay : MonoBehaviour
         switch (args.CameraMode)
         {
             case CameraRotation.CameraMode.Cam2D:
-                transform.localPosition += new Vector3(1, 10);
+                transform.localPosition += new Vector3(2f, 3);
                 break;
             case CameraRotation.CameraMode.Cam3D:
-                transform.localPosition += new Vector3(-1, -10);
+                transform.localPosition += new Vector3(-2f, -3);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

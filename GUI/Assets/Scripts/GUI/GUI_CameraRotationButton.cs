@@ -10,6 +10,8 @@ public class GUI_CameraRotationButton : MonoBehaviour
     private Button _rotationButton = default;
     [SerializeField]
     private TMPro.TextMeshProUGUI _defaultText = default;
+    [SerializeField]
+    private CameraRotation _cameraRotation = default;
     private bool _is3DMode = true;
 
     private void Start()
@@ -25,10 +27,12 @@ public class GUI_CameraRotationButton : MonoBehaviour
         if (_is3DMode)
         {
             SetText("2D");
+            _cameraRotation.SetCameraOrthogonal();
         }
         else
         {
             SetText("3D");
+            _cameraRotation.SetCameraDefault();
         }
     }
 

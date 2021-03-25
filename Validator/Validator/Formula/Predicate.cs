@@ -58,9 +58,14 @@ namespace Validator
             if (pL1Structure is IWorldSignature worldSignature)
             {
                 Signature signature = worldSignature.GetSignature();
-                if (!signature.Predicates.Any(elem => elem.Item1 == Name && elem.Item2 == Arguments.Count))
+                var correctElement = signature.Predicates.Find(elem => elem.Item1 == Name);
+                if (string.IsNullOrEmpty(correctElement.Item1))
                 {
-                    return ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnknownSymbol, "Predicate " + Name + " not found in signature.");
+                    return ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnknownSymbol, "Predicate " + Name + $" not found in the signature.");
+                }
+                else if (correctElement.Item2 != Arguments.Count)
+                {
+                    return ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnknownSymbol, "Predicate " + Name + $" has arity {correctElement.Item2}, but is applied to {Arguments.Count} arguments");
                 }
             }
 

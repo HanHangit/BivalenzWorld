@@ -19,44 +19,33 @@ public class CameraRotation : MonoBehaviour
     private Vector3 _orthoRot = new Vector3(90, 90, 0);
     public GenericEvent<CameraArgs> CameraChangedEvent = new GenericEvent<CameraArgs>();
     private Camera _currentCamera = default;
+    private CameraMode _currentCameraMode = CameraMode.Cam3D;
 
     public CameraMode GetCurrentCamMode()
     {
-        if (_currentCamera == _orthoCamera)
-        {
-            return CameraMode.Cam2D;
-        }
-        else
-        {
-            return CameraMode.Cam3D;
-        }
+        return _currentCameraMode;
     }
 
 
     public void SetCameraDefault()
     {
-        //SetCamera(_defaultPos, _defaultRot);
-        _camera.gameObject.SetActive(true);
-        _orthoCamera.gameObject.SetActive(false);
-        _currentCamera = _camera;
+        _currentCameraMode = CameraMode.Cam2D;
+
         CameraChangedEvent.InvokeEvent(new CameraArgs
         {
             Camera = _camera,
-            CameraMode = CameraMode.Cam3D
+            CameraMode = CameraMode.Cam2D
         });
-
     }
 
     public void SetCameraOrthogonal()
     {
-        //SetCamera(_orthoPos, _orthoRot);
-        _camera.gameObject.SetActive(false);
-        _orthoCamera.gameObject.SetActive(true);
-        _currentCamera = _orthoCamera;
+        _currentCameraMode = CameraMode.Cam3D;
+
         CameraChangedEvent.InvokeEvent(new CameraArgs
         {
             Camera = _orthoCamera,
-            CameraMode = CameraMode.Cam2D
+            CameraMode = CameraMode.Cam3D
         });
     }
 

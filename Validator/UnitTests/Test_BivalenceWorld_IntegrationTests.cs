@@ -90,6 +90,31 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TarskiWorld_Function_InPredicates()
+        {
+            List<string> sentences = new List<string>
+            {
+                    $"Larger(a,rm(a))",
+                    $"Larger(rm(a),rm(a))",
+                    "Larger(rm(a),a)"
+
+            };
+            List<WorldObject> worldObjects = new List<WorldObject>
+            {
+                    new WorldObject(new List<string> {"a"}, new List<string> {BivalenceWorldDataFields.CUBE, BivalenceWorldDataFields.LARGE},
+                            new List<object> {3, 3}),
+                    new WorldObject(new List<string> {"b"}, new List<string> {BivalenceWorldDataFields.CUBE, BivalenceWorldDataFields.MEDIUM},
+                            new List<object> {5, 3}),
+            };
+            WorldParameter parameter = new WorldParameter(worldObjects, sentences);
+            BivalenceWorld world = new BivalenceWorld();
+            var result = world.Check(parameter);
+            Assert.IsTrue(result.Result.Value[0].Value == EValidationResult.True);
+            Assert.IsTrue(result.Result.Value[1].Value == EValidationResult.False);
+            Assert.IsTrue(result.Result.Value[2].Value == EValidationResult.False);
+        }
+
+        [TestMethod]
         public void TarskiWorld_ModelRepresentation()
         {
             List<WorldObject> worldObjects = new List<WorldObject>
