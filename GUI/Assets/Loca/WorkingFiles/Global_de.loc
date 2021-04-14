@@ -1,0 +1,64 @@
+ConstantA { Benennt ein Objekt mit der ausgewählten Konstante.<n>Kann nur einmal in der Welt vorkommen.}
+ConstantB { Benennt ein Objekt mit der ausgewählten Konstante.<br>Kann nur einmal in der Welt vorkommen. }
+ConstantC { Benennt ein Objekt mit der ausgewählten Konstante.<br>Kann nur einmal in der Welt vorkommen.}
+ConstantD { Benennt ein Objekt mit der ausgewählten Konstante.<br>Kann nur einmal in der Welt vorkommen.}
+ConstantE { Benennt ein Objekt mit der ausgewählten Konstante.<br>Kann nur einmal in der Welt vorkommen.}
+ConstantF { Benennt ein Objekt mit der ausgewählten Konstante.<br>Kann nur einmal in der Welt vorkommen.}
+
+Cube { Würfel}
+Tet { Tetraeder}
+Dodec { Dodekaeder}
+Small { Klein}
+Medium { Mittlere Größe}
+Large { Groß}
+
+ChangeDimension {Wechselt die Ansicht zwischen 2D und 3D.}
+Pl1StructureView {Die modeltheoretische Struktur der Welt. }
+GameView {Startet das Spiel.}
+
+CheckAllButton {Überprüft alle Sätze.}
+DeleteOneButton {Löscht den ausgewählten Satz.}
+CreateNewSentences {Erstellt einen neuen Satz.}
+
+TetPredicate        {Tet(a): Das Objekt a ist ein Tetraeder.}
+SmallPredicate      {Small(a): Das Objekt a ist klein.}
+LeftOfPredicate     {LeftOf(a,b): Das Objekt a befindet sich links von b.}
+SameColPredicate    {SameCol(a,b): Die Objekte a und b befinden sich in der gleichen Spalte.}
+SmallerPredicate    {Smaller(a,b): Das Objekt a ist kleiner als Objekt b.}
+CubePredicate       {Cube(a): Das Objekt a ist ein Würfel.}
+MediumPredicate     {Medium(a): Das Objekt a besitzt eine mittlere Größe.}
+RightOfPredicate    {RightOf(a,b): Das Objekt a befindet sich rechts von Objekt b.}
+SameRowPredicate    {SameRow(a,b): Die Objekte a und b befinden sich in der gleichen Zeile.}
+LargerPredicate     {Larger(a,b): Das Objekt a ist größer als Objekt b.}
+DodecPredicate      {Dodec(a): Das Objekt a ist ein Dodekaeder.}
+LargePredicate      {Large(a): Das Objekt a ist groß.}
+FrontOfPredicate    {FrontOf(a,b): Das Objekt a befindet sich vor Objekt b.}
+BetweenPredicate    {Between(a,b,c): Das Objekt a befindet sich zwischen Objekt b und c.}
+SameSizePredicate   {SameSize(a,b): Die Objekte a und b besitzen die gleiche Größe.}
+SameShape           {SameShape(a,b): Die Objekte a und b besitzen die gleiche Form.}
+BackOf              {BackOf(a,b): Das Objekt a befindet sich hinter Objekt b.}
+Adjoins             {Adjoins(a,b): Die Objekte a und b befinden sich auf benachbarten Felder.}
+
+lmFunction          {lm(a): Gibt das Objekte zurück, welches sich am weitestens links von a befindet.}
+rmFunction          {rm(a): Gibt das Objekt zurück, welches sich am weitestens rechts von a befindet.}
+fmFunction          {fm(a): Gibt das Objekt zurück, welches sich am weitestens vorne von a befindet.}
+bmFunction          {bm(a): Gibt das Objekt zurück, welches sich am weitestens hinten von a befindet.}
+
+andOperator          {Die logische Konjunktion.}
+orOperator          {Die logische Disjunktion.}
+negateOperator          {Die logische Negation.}
+impliesOperator          {Die logische Implikation.}
+isequivalentOperator          {Das logische Bikonditional.}
+falsumOperator          {Die Wahrheitswert falsch.}
+
+allQuantum          {Der Allquantor.}
+existQuantum          {Der Existenzquantor.}
+equalsOperator          {Die logische Äquivalenz.}
+doesNotEqualOperator          {Die Negation der Äquivalenz.}
+leftParanthesisOperator          {Offene Klammer.}
+rightParanthesisOperator          {Geschlossene Klammer.}
+constant          {Eine Konstante.}
+variable          {Eine Variable.}
+
+Save          {Speichert die World oder/und die Sätze}
+Load          {Lädt eine Welt oder Sätze.}

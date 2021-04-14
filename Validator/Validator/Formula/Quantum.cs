@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Validator.Game;
 using Validator.World;
 
 namespace Validator
@@ -7,27 +8,33 @@ namespace Validator
     public class Quantum : GenericFormula<Formula>, IFormulaValidate
     {
         private EQuantumType _type = EQuantumType.None;
-        private string _variable = "";
+        private Variable _variable = null;
+        private KeyValuePair<string, string> _invalidConstPair = new KeyValuePair<string, string>();
+        private KeyValuePair<string, string> _validConstPair = new KeyValuePair<string, string>();
 
-        public Quantum(EQuantumType type, Formula argument, string variable, string name, string rawFormula) : base(new List<Formula> { argument }, name,
-                rawFormula)
+        public Quantum(EQuantumType type, Formula argument, Variable variable, string name, string formattedFormula) : base(new List<Formula> { argument }, name,
+                formattedFormula)
         {
             _type = type;
             _variable = variable;
+
+            string quantum = _type == EQuantumType.All ? "\u2200" : "\u2203";
+
+            SetFormattedFormula(quantum + variable.FormattedFormula + argument.FormattedFormula);
         }
 
-        public Result<EValidationResult> Validate(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
+        public ResultSentence<EValidationResult> Validate(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
         {
-            Result<EValidationResult> result = Result<EValidationResult>.CreateResult(true, EValidationResult.True);
+            ResultSentence<EValidationResult> result = ResultSentence<EValidationResult>.CreateResult(true, EValidationResult.True);
             if (_type == EQuantumType.None)
             {
-                result = Result<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult, "Parser failed. Quantumtype not detected");
+                result = ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult, "Parser failed. Quantumtype not detected");
             }
 
             var arguments = GetArgumentsOfType<IFormulaValidate>().ToList();
             if (arguments.Count != 1)
             {
-                result = Result<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult,
+                result = ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult,
                         "Invalid amount of arguments in quantum : " + arguments.Count);
             }
             else
@@ -45,16 +52,22 @@ namespace Validator
             return result;
         }
 
-        private Result<EValidationResult> ValidateAllQuantum(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
+        private ResultSentence<EValidationResult> ValidateAllQuantum(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
         {
             var arguments = GetArgumentsOfType<IFormulaValidate>().First();
-            var result = Result<EValidationResult>.CreateResult(true, EValidationResult.True);
+            var result = ResultSentence<EValidationResult>.CreateResult(true, EValidationResult.True);
             foreach (var identifier in pL1Structure.GetPl1Structure().GetConsts())
             {
-                var dict = new Dictionary<string, string>(dictVariables)
+                var dict = new Dictionary<string, string>(dictVariables);
+                if (!dict.ContainsKey(_variable.FormattedFormula))
                 {
-                        {_variable, identifier.Key}
-                };
+                    dict.Add(_variable.FormattedFormula, identifier.Key);
+                }
+                else
+                {
+                    dict[_variable.FormattedFormula] = identifier.Key;
+                }
+
                 var helpResult = arguments.Validate(pL1Structure, dict);
                 if (!helpResult.IsValid)
                 {
@@ -65,22 +78,33 @@ namespace Validator
                 if (helpResult.Value != EValidationResult.True)
                 {
                     result = helpResult;
+                    _invalidConstPair = new KeyValuePair<string, string>(_variable.Name, identifier.Key);
+                }
+                else
+                {
+                    _validConstPair = new KeyValuePair<string, string>(_variable.Name, identifier.Key);
                 }
             }
 
             return result;
         }
 
-        private Result<EValidationResult> ValidateExistQuantum(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
+        private ResultSentence<EValidationResult> ValidateExistQuantum(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
         {
             var arguments = GetArgumentsOfType<IFormulaValidate>().First();
-            var result = Result<EValidationResult>.CreateResult(true, EValidationResult.False);
+            var result = ResultSentence<EValidationResult>.CreateResult(true, EValidationResult.False);
             foreach (var identifier in pL1Structure.GetPl1Structure().GetConsts())
             {
-                var dict = new Dictionary<string, string>(dictVariables)
+                var dict = new Dictionary<string, string>(dictVariables);
+                if (!dict.ContainsKey(_variable.FormattedFormula))
                 {
-                        {_variable, identifier.Key}
-                };
+                    dict.Add(_variable.FormattedFormula, identifier.Key);
+                }
+                else
+                {
+                    dict[_variable.FormattedFormula] = identifier.Key;
+                }
+
                 var helpResult = arguments.Validate(pL1Structure, dict);
                 if (!helpResult.IsValid)
                 {
@@ -91,10 +115,122 @@ namespace Validator
                 if (helpResult.Value == EValidationResult.True)
                 {
                     result = helpResult;
+                    _validConstPair = new KeyValuePair<string, string>(_variable.Name, identifier.Key);
+                    break;
+                }
+                else
+                {
+                    _invalidConstPair = new KeyValuePair<string, string>(_variable.Name, identifier.Key);
                 }
             }
 
             return result;
+        }
+
+        private List<Question.Selection> CreatePossibleSelection(Game.Game game, Dictionary<string, string> dictVariables)
+        {
+            var selection = new List<Question.Selection>();
+            foreach (var worldObject in game.WorldObjects)
+            {
+                selection.Add(new Question.Selection(Arguments[0], dictVariables, worldObject, _variable.Name));
+            }
+
+            return selection;
+        }
+
+        public override string ReformatFormula(Dictionary<string, string> variables)
+        {
+            string quantum = _type == EQuantumType.All ? "\u2200" : "\u2203";
+
+            return quantum + _variable.FormattedFormula + Arguments[0].ReformatFormula(variables);
+        }
+
+        public override AMove CreateNextMove(Game.Game game, Dictionary<string, string> dictVariables)
+        {
+            if (_type == EQuantumType.Exist)
+            {
+                return CreateMoveExistQuantum(game, dictVariables);
+            }
+            else
+            {
+                return CreateMoveAllQuantum(game, dictVariables);
+            }
+        }
+
+        private AMove CreateMoveExistQuantum(Game.Game game, Dictionary<string, string> dictVariables)
+        {
+            var result = Validate(game.World, dictVariables);
+
+            if (game.Guess)
+            {
+                var questionMessage = new Question(game, this, $"Choose a block that satisfies:\n{Arguments[0].ReformatFormula(dictVariables)}", CreatePossibleSelection(game, dictVariables));
+                var infoVariable = new InfoMessage(game, this, $"So you believe that some object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nYou will try to find an instance", questionMessage);
+                return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is true", infoVariable);
+            }
+            else
+            {
+                var infoVariable = new InfoMessage(game, this, $"So you believe that some object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables, game)));
+                return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is false", infoVariable);
+            }
+        }
+
+        private AMove CreateMoveAllQuantum(Game.Game game, Dictionary<string, string> dictVariables)
+        {
+            var result = Validate(game.World, dictVariables);
+
+            if (game.Guess)
+            {
+                var infoVariable = new InfoMessage(game, this, $"So you believe that every object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nBivalence World will try to find a counterexample", Arguments[0].CreateNextMove(game, SetResultVariableConstValue(result.Value, dictVariables, game)));
+                return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is true", infoVariable);
+            }
+            else
+            {
+                var questionMessage = new Question(game, this, $"Choose a block that satisfies:\n{Arguments[0].ReformatFormula(dictVariables)}", CreatePossibleSelection(game, dictVariables));
+                var infoVariable = new InfoMessage(game, this, $"So you believe that every object [{_variable.ReformatFormula(dictVariables)}] satisfies\n{Arguments[0].ReformatFormula(dictVariables)}\nYou will try to find an instance", questionMessage);
+                return new InfoMessage(game, this, $"So you believe that \n{ReformatFormula(dictVariables)}\n is false", infoVariable);
+            }
+        }
+
+        private Dictionary<string, string> SetResultVariableConstValue(EValidationResult result, Dictionary<string, string> dictVariables, Game.Game game)
+        {
+            Dictionary<string, string> newDictionary = new Dictionary<string, string>();
+
+            var keyValue = new KeyValuePair<string, string>();
+            if (result == EValidationResult.True)
+            {
+                keyValue = _validConstPair;
+            }
+            else
+            {
+                keyValue = _invalidConstPair;
+            }
+
+            foreach (KeyValuePair<string, string> pair in dictVariables)
+            {
+                newDictionary.Add(pair.Key, pair.Value);
+            }
+
+            if (newDictionary.ContainsKey(keyValue.Key))
+            {
+                newDictionary[keyValue.Key] = keyValue.Value;
+            }
+            else
+            {
+                newDictionary.Add(keyValue.Key, keyValue.Value);
+            }
+
+            if (keyValue.Value.StartsWith("n"))
+            {
+                var worldConstant = keyValue.Value;
+                var worldObject = game.WorldObjects.Find(obj => obj.Consts.Contains(worldConstant));
+                if (worldObject.Tags != null)
+                {
+                    worldObject.Consts.Add(worldConstant);
+                }
+                game.AddTemporaryWorldObject(worldObject);
+            }
+
+            return newDictionary;
         }
     }
 }

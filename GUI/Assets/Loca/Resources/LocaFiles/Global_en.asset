@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05329e16218c9354a904c27d2a8d5c75, type: 3}
+  m_Name: Global_en
+  m_EditorClassIdentifier: 
+  _data:
+  - Key: ConstantA
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: ConstantB
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: ConstantC
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: ConstantD
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: ConstantE
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: ConstantF
+    Value: Names an object with the selected constant.<n>Can occur only once in the
+      world.
+    Tags: []
+  - Key: Cube
+    Value: Cube
+    Tags: []
+  - Key: Tet
+    Value: Tetraeder
+    Tags: []
+  - Key: Dodec
+    Value: Dodecaeder
+    Tags: []
+  - Key: Small
+    Value: Small
+    Tags: []
+  - Key: Medium
+    Value: Medium
+    Tags: []
+  - Key: Large
+    Value: Large
+    Tags: []
+  - Key: ChangeDimension
+    Value: Change the perspective between 2D and 3D.
+    Tags: []
+  - Key: Pl1StructureView
+    Value: Shows the model representation of the world.
+    Tags: []
+  - Key: GameView
+    Value: Starts the game.
+    Tags: []
+  - Key: CheckAllButton
+    Value: Validate all sentences.
+    Tags: []
+  - Key: DeleteOneButton
+    Value: Delete one sentence.
+    Tags: []
+  - Key: CreateNewSentences
+    Value: Create one sentence.
+    Tags: []
+  - Key: TetPredicate
+    Value: 'Tet(a): The object a is a tetraeder.'
+    Tags: []
+  - Key: SmallPredicate
+    Value: 'Small(a): The object a is small.'
+    Tags: []
+  - Key: LeftOfPredicate
+    Value: 'LeftOf(a,b): The object a is left of object b.'
+    Tags: []
+  - Key: SameColPredicate
+    Value: 'SameCol(a,b): The objects a and b are on the same column.'
+    Tags: []
+  - Key: SmallerPredicate
+    Value: 'Smaller(a,b): The object a is smaller then object b.'
+    Tags: []
+  - Key: CubePredicate
+    Value: 'Cube(a): The object a is a cube.'
+    Tags: []
+  - Key: MediumPredicate
+    Value: 'Medium(a): The object a is of medium size.'
+    Tags: []
+  - Key: RightOfPredicate
+    Value: 'RightOf(a,b): The object a is right of object b.'
+    Tags: []
+  - Key: SameRowPredicate
+    Value: 'SameRow(a,b): The objects a and b are on the same row.'
+    Tags: []
+  - Key: LargerPredicate
+    Value: 'Larger(a,b): The object a is larger then object b.'
+    Tags: []
+  - Key: DodecPredicate
+    Value: 'Dodec(a): The object a is a dodecaeder.'
+    Tags: []
+  - Key: LargePredicate
+    Value: 'Large(a): The object a is large.'
+    Tags: []
+  - Key: FrontOfPredicate
+    Value: 'FrontOf(a,b): The object a is in front of object b.'
+    Tags: []
+  - Key: BetweenPredicate
+    Value: 'Between(a,b,c): The object a is between object b and object c.'
+    Tags: []
+  - Key: SameSizePredicate
+    Value: 'SameSize(a,b): The objects a and b have the same size.'
+    Tags: []
+  - Key: SameShape
+    Value: 'SameShape(a,b): The objects a and b have the same shape.'
+    Tags: []
+  - Key: BackOf
+    Value: 'BackOf(a,b): The object a is in back of object b.'
+    Tags: []
+  - Key: Adjoins
+    Value: 'Adjoins(a,b): The objects a and b are neighbours.'
+    Tags: []
+  - Key: lmFunction
+    Value: 'lm(a): Returns an object, which is leftmost of object a.'
+    Tags: []
+  - Key: rmFunction
+    Value: 'rm(a): Returns an object, which is rightmost of object a.'
+    Tags: []
+  - Key: fmFunction
+    Value: 'fm(a): Returns an object, which is frontmost of object a.'
+    Tags: []
+  - Key: bmFunction
+    Value: 'bm(a): Returns an object, which is backmost of object a.'
+    Tags: []
+  - Key: andOperator
+    Value: The conjunction.
+    Tags: []
+  - Key: orOperator
+    Value: The disjunction.
+    Tags: []
+  - Key: negateOperator
+    Value: The negation.
+    Tags: []
+  - Key: impliesOperator
+    Value: The implication.
+    Tags: []
+  - Key: isequivalentOperator
+    Value: The biconditional.
+    Tags: []
+  - Key: falsumOperator
+    Value: False.
+    Tags: []
+  - Key: allQuantum
+    Value: The allquantum.
+    Tags: []
+  - Key: existQuantum
+    Value: The existquantom.
+    Tags: []
+  - Key: equalsOperator
+    Value: Equivalent.
+    Tags: []
+  - Key: doesNotEqualOperator
+    Value: The negation of equivalent.
+    Tags: []
+  - Key: leftParanthesisOperator
+    Value: Open bracket.
+    Tags: []
+  - Key: rightParanthesisOperator
+    Value: Closed bracket.
+    Tags: []
+  - Key: constant
+    Value: A constant.
+    Tags: []
+  - Key: variable
+    Value: A variable.
+    Tags: []
+  - Key: Save
+    Value: Saves the world or/and the sentences.
+    Tags: []
+  - Key: Load
+    Value: Loads a world or sentences.
+    Tags: []
+  _workingFileAssetPath: Assets/Loca/WorkingFiles/Global_en.loc

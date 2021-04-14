@@ -1,22 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Validator.Game;
 using Validator.World;
 
 namespace Validator
 {
     public class Implication : GenericFormula<Formula>, IFormulaValidate
     {
-        public Implication(Formula first, Formula second, string name, string rawFormula) : base(new List<Formula> { first, second }, name, rawFormula)
+        private Formula _rewrittenFormula = null;
+
+        public Implication(Formula first, Formula second, string name, string formattedFormula) : base(new List<Formula> { first, second }, name, formattedFormula)
         {
+            var rewrittenArguments = new List<Formula>()
+            {
+                new Negation(first),
+                second
+            };
+            _rewrittenFormula = new Disjunction(rewrittenArguments, name, formattedFormula);
+
+            SetFormattedFormula(first.FormattedFormula + "\u2192" + second.FormattedFormula);
         }
 
-        public Result<EValidationResult> Validate(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
+        public ResultSentence<EValidationResult> Validate(IWorldPL1Structure pL1Structure, Dictionary<string, string> dictVariables)
         {
-            Result<EValidationResult> result = Result<EValidationResult>.CreateResult(true, EValidationResult.False);
+            ResultSentence<EValidationResult> result = ResultSentence<EValidationResult>.CreateResult(true, EValidationResult.False);
             var arguments = GetArgumentsOfType<IFormulaValidate>().ToList();
             if (arguments.Count != 2)
             {
-                result = Result<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult,
+                result = ResultSentence<EValidationResult>.CreateResult(false, EValidationResult.UnexpectedResult,
                         "Implication has invalid amount of arguments " + arguments.Count);
             }
             else
@@ -27,11 +38,11 @@ namespace Validator
                 {
                     if (result1.Value == EValidationResult.False || result2.Value == EValidationResult.True)
                     {
-                        result = Result<EValidationResult>.CreateResult(EValidationResult.True);
+                        result = ResultSentence<EValidationResult>.CreateResult(EValidationResult.True);
                     }
                     else
                     {
-                        result = Result<EValidationResult>.CreateResult(EValidationResult.False);
+                        result = ResultSentence<EValidationResult>.CreateResult(EValidationResult.False);
                     }
                 }
                 else
@@ -48,6 +59,16 @@ namespace Validator
             }
 
             return result;
+        }
+
+        public override string ReformatFormula(Dictionary<string, string> variables)
+        {
+            return Arguments[0].ReformatFormula(variables) + "\u2192" + Arguments[1].ReformatFormula(variables);
+        }
+
+        public override AMove CreateNextMove(Game.Game game, Dictionary<string, string> dictVariables)
+        {
+            return new InfoMessage(game, this, $"{ReformatFormula(dictVariables)}\ncan be rewritten as\n{_rewrittenFormula.ReformatFormula(dictVariables)}", _rewrittenFormula.CreateNextMove(game, dictVariables));
         }
     }
 }

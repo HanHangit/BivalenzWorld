@@ -1,0 +1,13 @@
+jobs:
+    include:
+      - language: csharp
+        mono: none
+        dotnet: 2.1.502
+        solution: Validator.sln
+        before_script:
+            - cd Validator
+        script:
+            - dotnet restore
+            - dotnet build
+            - dotnet test
+        

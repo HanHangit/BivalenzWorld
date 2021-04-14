@@ -1,0 +1,194 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05329e16218c9354a904c27d2a8d5c75, type: 3}
+  m_Name: Global_de
+  m_EditorClassIdentifier: 
+  _data:
+  - Key: ConstantA
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<n>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: ConstantB
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<br>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: ConstantC
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<br>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: ConstantD
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<br>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: ConstantE
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<br>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: ConstantF
+    Value: "Benennt ein Objekt mit der ausgew\xE4hlten Konstante.<br>Kann nur einmal
+      in der Welt vorkommen."
+    Tags: []
+  - Key: Cube
+    Value: "W\xFCrfel"
+    Tags: []
+  - Key: Tet
+    Value: Tetraeder
+    Tags: []
+  - Key: Dodec
+    Value: Dodekaeder
+    Tags: []
+  - Key: Small
+    Value: Klein
+    Tags: []
+  - Key: Medium
+    Value: "Mittlere Gr\xF6\xDFe"
+    Tags: []
+  - Key: Large
+    Value: "Gro\xDF"
+    Tags: []
+  - Key: ChangeDimension
+    Value: Wechselt die Ansicht zwischen 2D und 3D.
+    Tags: []
+  - Key: Pl1StructureView
+    Value: Die modeltheoretische Struktur der Welt.
+    Tags: []
+  - Key: GameView
+    Value: Startet das Spiel.
+    Tags: []
+  - Key: CheckAllButton
+    Value: "\xDCberpr\xFCft alle S\xE4tze."
+    Tags: []
+  - Key: DeleteOneButton
+    Value: "L\xF6scht den ausgew\xE4hlten Satz."
+    Tags: []
+  - Key: CreateNewSentences
+    Value: Erstellt einen neuen Satz.
+    Tags: []
+  - Key: TetPredicate
+    Value: 'Tet(a): Das Objekt a ist ein Tetraeder.'
+    Tags: []
+  - Key: SmallPredicate
+    Value: 'Small(a): Das Objekt a ist klein.'
+    Tags: []
+  - Key: LeftOfPredicate
+    Value: 'LeftOf(a,b): Das Objekt a befindet sich links von b.'
+    Tags: []
+  - Key: SameColPredicate
+    Value: 'SameCol(a,b): Die Objekte a und b befinden sich in der gleichen Spalte.'
+    Tags: []
+  - Key: SmallerPredicate
+    Value: 'Smaller(a,b): Das Objekt a ist kleiner als Objekt b.'
+    Tags: []
+  - Key: CubePredicate
+    Value: "Cube(a): Das Objekt a ist ein W\xFCrfel."
+    Tags: []
+  - Key: MediumPredicate
+    Value: "Medium(a): Das Objekt a besitzt eine mittlere Gr\xF6\xDFe."
+    Tags: []
+  - Key: RightOfPredicate
+    Value: 'RightOf(a,b): Das Objekt a befindet sich rechts von Objekt b.'
+    Tags: []
+  - Key: SameRowPredicate
+    Value: 'SameRow(a,b): Die Objekte a und b befinden sich in der gleichen Zeile.'
+    Tags: []
+  - Key: LargerPredicate
+    Value: "Larger(a,b): Das Objekt a ist gr\xF6\xDFer als Objekt b."
+    Tags: []
+  - Key: DodecPredicate
+    Value: 'Dodec(a): Das Objekt a ist ein Dodekaeder.'
+    Tags: []
+  - Key: LargePredicate
+    Value: "Large(a): Das Objekt a ist gro\xDF."
+    Tags: []
+  - Key: FrontOfPredicate
+    Value: 'FrontOf(a,b): Das Objekt a befindet sich vor Objekt b.'
+    Tags: []
+  - Key: BetweenPredicate
+    Value: 'Between(a,b,c): Das Objekt a befindet sich zwischen Objekt b und c.'
+    Tags: []
+  - Key: SameSizePredicate
+    Value: "SameSize(a,b): Die Objekte a und b besitzen die gleiche Gr\xF6\xDFe."
+    Tags: []
+  - Key: SameShape
+    Value: 'SameShape(a,b): Die Objekte a und b besitzen die gleiche Form.'
+    Tags: []
+  - Key: BackOf
+    Value: 'BackOf(a,b): Das Objekt a befindet sich hinter Objekt b.'
+    Tags: []
+  - Key: Adjoins
+    Value: 'Adjoins(a,b): Die Objekte a und b befinden sich auf benachbarten Felder.'
+    Tags: []
+  - Key: lmFunction
+    Value: "lm(a): Gibt das Objekte zur\xFCck, welches sich am weitestens links von
+      a befindet."
+    Tags: []
+  - Key: rmFunction
+    Value: "rm(a): Gibt das Objekt zur\xFCck, welches sich am weitestens rechts von
+      a befindet."
+    Tags: []
+  - Key: fmFunction
+    Value: "fm(a): Gibt das Objekt zur\xFCck, welches sich am weitestens vorne von
+      a befindet."
+    Tags: []
+  - Key: bmFunction
+    Value: "bm(a): Gibt das Objekt zur\xFCck, welches sich am weitestens hinten von
+      a befindet."
+    Tags: []
+  - Key: andOperator
+    Value: Die logische Konjunktion.
+    Tags: []
+  - Key: orOperator
+    Value: Die logische Disjunktion.
+    Tags: []
+  - Key: negateOperator
+    Value: Die logische Negation.
+    Tags: []
+  - Key: impliesOperator
+    Value: Die logische Implikation.
+    Tags: []
+  - Key: isequivalentOperator
+    Value: Das logische Bikonditional.
+    Tags: []
+  - Key: falsumOperator
+    Value: Die Wahrheitswert falsch.
+    Tags: []
+  - Key: allQuantum
+    Value: Der Allquantor.
+    Tags: []
+  - Key: existQuantum
+    Value: Der Existenzquantor.
+    Tags: []
+  - Key: equalsOperator
+    Value: "Die logische \xC4quivalenz."
+    Tags: []
+  - Key: doesNotEqualOperator
+    Value: "Die Negation der \xC4quivalenz."
+    Tags: []
+  - Key: leftParanthesisOperator
+    Value: Offene Klammer.
+    Tags: []
+  - Key: rightParanthesisOperator
+    Value: Geschlossene Klammer.
+    Tags: []
+  - Key: constant
+    Value: Eine Konstante.
+    Tags: []
+  - Key: variable
+    Value: Eine Variable.
+    Tags: []
+  - Key: Save
+    Value: "Speichert die World oder/und die S\xE4tze"
+    Tags: []
+  - Key: Load
+    Value: "L\xE4dt eine Welt oder S\xE4tze."
+    Tags: []
+  _workingFileAssetPath: Assets/Loca/WorkingFiles/Global_de.loc
